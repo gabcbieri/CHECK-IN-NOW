@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Lista de Participantes</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navegacao">
+        <ul class="menu" id="menu">
+          <li>
+            <a href="ingressos.html" class="menu-link-ingressos">Como ler ingressos?</a>
+          </li>
+          <li><a href="index.html#home" class="menu-link">Home</a></li>
+          <li><a href="index.html#entrada" class="menu-link">Entrada Manual</a></li>
+          <li><a href="lista.html" class="menu-link">Lista do evento</a></li>
+          <li><a href="entrada-info.html" class="menu-link">Informações da entrada</a></li>
+          <li><a href="login.html" class="sair">Sair</a></li>
+        </ul>
+        <div class="menu-icon" id="menu-icon">&#9776;</div>
+        <div class="overlay" id="overlay"></div>
+      </nav>
+    </header>
+
+    <main class="entrada">
+      <h2 class="titulo-entrada">Participantes</h2>
+      <div id="lista-participantes" class="passos"></div>
+      <button class="btn" onclick="exportarCSV()">Exportar CSV</button>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+  <script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const container = document.querySelector('.lista-participantes');
+  try {
+    const resposta = await fetch('http://localhost:3000/api/participantes');
+    const participantes = await resposta.json();
+
+    if (participantes.length === 0) {
+      container.innerHTML = '<p>Nenhum participante registrado ainda.</p>';
+      return;
+    }
+
+    container.innerHTML = participantes.map(p =>
+      `<div class="card-participante">
+        <p><strong>Código:</strong> ${p.codigo}</p>
+        <p><strong>Data:</strong> ${new Date(p.data_hora).toLocaleString()}</p>
+      </div>`
+    ).join('');
+  } catch (err) {
+    container.innerHTML = '<p>Erro ao carregar participantes.</p>';
+  }
+});
+</script>
+
+</html>
