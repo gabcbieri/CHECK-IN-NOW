@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Check in Now</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navegacao">
+        <ul class="menu" id="menu">
+          <li>
+            <a href="ingressos.html" class="menu-link"
+              >Como ler ingressos?</a
+            >
+          </li>
+          <li><a href="#home" class="menu-link">Home</a></li>
+          <li><a href="#entrada" class="menu-link">Entrada Manual</a></li>
+          <li><a href="lista.html" class="menu-link">Lista do evento</a></li>
+          <li>
+            <a href="entrada-info.html" class="menu-link"
+              >Informações da entrada</a
+            >
+          </li>
+          <li><a href="login.html" class="sair">Sair</a></li>
+        </ul>
+        <div class="menu-icon" id="menu-icon">&#9776;</div>
+        <div class="overlay" id="overlay"></div>
+      </nav>
+    </header>
+
+    <main id="home" class="home">
+      <h1 class="titulo">CHECK IN</h1>
+      <p class="now">NOW</p>
+    </main>
+
+    <section id="entrada" class="entrada">
+      <h2 class="titulo-entrada">Entrada Manual</h2>
+      <form id="form-checkin" class="form-entrada">
+        <label for="codigo">Código:</label>
+        <input type="text" id="codigo" name="codigo" required />
+
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" />
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" />
+
+        <label for="ingresso">Tipo de Ingresso:</label>
+        <div class="opcoes-ingresso">
+          <input type="radio" id="vip" name="ingresso" value="VIP" required />
+          <label for="vip" class="opcao vip">VIP</label>
+
+          <input type="radio" id="pista" name="ingresso" value="Pista" />
+          <label for="pista" class="opcao pista">Pista</label>
+        </div>
+
+        <button type="submit">Registrar Código</button>
+      </form>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
