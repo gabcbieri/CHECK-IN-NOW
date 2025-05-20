@@ -336,9 +336,16 @@ body.menu-aberto {
     background-color: var(--escuro);
     border-left: 4px solid var(--secondary-color);
     padding: 1.5rem;
-    margin-bottom: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    width: 300px; /* largura definida */
+    flex-shrink: 0; /* impede de encolher demais */
+}
+
+@media (max-width: 768px) {
+  .passo {
+    width: 100%;
+  }
 }
 
 .passo h2 {
@@ -353,8 +360,12 @@ body.menu-aberto {
 }
 
 .passos {
-    max-width: 700px;
+    max-width: 100%;
     text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem; /* espaço entre os blocos */
 }
 
 .form-entrada {
