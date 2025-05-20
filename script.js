@@ -258,3 +258,25 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const container = document.querySelector('.lista-participantes');
+  try {
+    const resposta = await fetch('http://localhost:3000/api/participantes');
+    const participantes = await resposta.json();
+
+    if (participantes.length === 0) {
+      container.innerHTML = '<p>Nenhum participante registrado ainda.</p>';
+      return;
+    }
+
+    container.innerHTML = participantes.map(p =>
+      `<div class="card-participante">
+        <p><strong>Código:</strong> ${p.codigo}</p>
+        <p><strong>Data:</strong> ${new Date(p.data_hora).toLocaleString()}</p>
+      </div>`
+    ).join('');
+  } catch (err) {
+    container.innerHTML = '<p>Erro ao carregar participantes.</p>';
+  }
+});
