@@ -1,5 +1,5 @@
 document.getElementById("login-form").addEventListener("submit", async (e) => {
-  e.preventDefault(); // evita o reload da página
+  e.preventDefault(); 
 
   const email = document.getElementById("email").value.trim();
   const senha = document.getElementById("senha").value.trim();
@@ -13,7 +13,7 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     const response = await fetch("http://localhost:5285/api/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, SenhaHash: senha }), // aqui troca senha por SenhaHash
+      body: JSON.stringify({ email, SenhaHash: senha }), 
     });
 
     const data = await response.json();

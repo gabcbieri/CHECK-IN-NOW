@@ -6,7 +6,6 @@ using System.Text.Json;
 
 namespace CheckinApi.Controllers
 {
-    // DTO para receber os dados do front-end
     public class CheckinDto
     {
         public string Codigo { get; set; } = string.Empty;
@@ -30,7 +29,17 @@ namespace CheckinApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCheckins()
         {
-            var checkins = await _context.Checkins.ToListAsync();
+            var checkins = await _context.Checkins
+                .Select(c => new
+                {
+                    codigo = c.Codigo,
+                    nomePessoa = c.NomePessoa,
+                    email = c.Email,
+                    tipoIngresso = c.TipoIngresso,
+                    dataHora = c.DataHora
+                })
+                .ToListAsync();
+
             return Ok(checkins);
         }
 
@@ -41,11 +50,18 @@ namespace CheckinApi.Controllers
             if (checkin == null)
                 return NotFound(new { mensagem = "Check-in não encontrado." });
 
-            return Ok(checkin);
+            return Ok(new
+            {
+                codigo = checkin.Codigo,
+                nomePessoa = checkin.NomePessoa,
+                email = checkin.Email,
+                tipoIngresso = checkin.TipoIngresso,
+                dataHora = checkin.DataHora
+            });
         }
 
         [HttpPost]
-        public async Task<ActionResult<Checkin>> PostCheckin([FromBody] CheckinDto dto)
+        public async Task<ActionResult> PostCheckin([FromBody] CheckinDto dto)
         {
             if (dto == null)
                 return BadRequest(new { mensagem = "Dados inválidos." });
@@ -70,7 +86,14 @@ namespace CheckinApi.Controllers
             _context.Checkins.Add(checkin);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCheckinById), new { id = checkin.Id }, checkin);
+            return CreatedAtAction(nameof(GetCheckinById), new { id = checkin.Id }, new
+            {
+                codigo = checkin.Codigo,
+                nomePessoa = checkin.NomePessoa,
+                email = checkin.Email,
+                tipoIngresso = checkin.TipoIngresso,
+                dataHora = checkin.DataHora
+            });
         }
 
         [HttpPut("{id}")]
@@ -105,7 +128,6 @@ namespace CheckinApi.Controllers
                 var property = properties.FirstOrDefault(p =>
                     string.Equals(p.Name, prop.Name, StringComparison.OrdinalIgnoreCase));
 
-                // Ignora alterações no campo DataHora
                 if (property != null && property.Name != nameof(Checkin.DataHora))
                 {
                     var value = JsonSerializer.Deserialize(prop.Value.GetRawText(), property.PropertyType);

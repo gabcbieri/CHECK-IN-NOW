@@ -2,9 +2,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const formCheckin = document.getElementById("form-checkin");
   const container = document.getElementById("lista-participantes");
 
-  const API_URL = "http://localhost:5012/checkins"; // ajuste aqui se a rota real for outra
+  const API_URL = "http://localhost:5012/checkins"; 
 
-  // Função para carregar participantes
   async function carregarParticipantes() {
     if (!container) return;
 
@@ -22,21 +21,21 @@ document.addEventListener("DOMContentLoaded", () => {
       container.innerHTML = participantes
         .map(
           (p, index) => `
-  <div class="passo" id="checkin-${index}">
-    <button class="fechar-checkin" data-id="checkin-${index}" style="float:right; background:none; border:none; font-size:16px; cursor:pointer;">❌</button>
-    <p><strong>Código:</strong> ${p.Codigo}</p>
-    <p><strong>Nome:</strong> ${p.NomePessoa}</p>
-    <p><strong>Email:</strong> ${p.Email}</p>
-    <p><strong>Tipo de Ingresso:</strong> ${p.TipoIngresso}</p>
-    <p><strong>Data do Check-in:</strong> ${new Date(
-      p.DataHora
-    ).toLocaleString()}</p>
-  </div>
+    <div class="passo" id="checkin-${index}">
+      <button class="fechar-checkin" data-id="checkin-${index}" style="float:right; background:none; border:none; font-size:16px; cursor:pointer;">❌</button>
+      <p><strong>Código:</strong> ${p.codigo}</p>
+      <p><strong>Nome:</strong> ${p.nomePessoa}</p>
+      <p><strong>Email:</strong> ${p.email}</p>
+      <p><strong>Tipo de Ingresso:</strong> ${p.tipoIngresso}</p>
+      <p><strong>Data do Check-in:</strong> ${new Date(
+        p.dataHora
+      ).toLocaleString()}</p>
+    </div>
 `
         )
         .join("");
 
-      ativarBotoesFechar(); // <-- Ativa os botões após renderizar os check-ins
+      ativarBotoesFechar(); 
     } catch (error) {
       console.error(error);
       container.innerHTML =
@@ -44,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Função para ativar botões de fechar ❌
   function ativarBotoesFechar() {
     const botoesFechar = document.querySelectorAll(".fechar-checkin");
     botoesFechar.forEach((btn) => {
@@ -57,8 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   }
-
-  // Função de envio do formulário
+  
   if (formCheckin) {
     formCheckin.addEventListener("submit", async (e) => {
       e.preventDefault();

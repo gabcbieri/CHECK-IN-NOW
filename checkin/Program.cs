@@ -23,7 +23,7 @@ builder.Services.AddControllers()
 
 var app = builder.Build();
 
-app.UseRouting(); // <- Adicione isso!
+app.UseRouting(); 
 
 app.UseCors("AllowAll");
 

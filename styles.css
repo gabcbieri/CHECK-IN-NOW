@@ -15,12 +15,12 @@ html {
 }
 
 :root {
-    --primary-color: #2563eb;       /* Azul forte */
-    --secondary-color: #22c55e;     /* Verde limão */
-    --escuro: #1e293b;              /* Azul escuro */
-    --mais-escuro: #0f172a;         /* Quase preto */
-    --claro: #f1f5f9;               /* Cinza claro */
-    --vidro: rgba(255, 255, 255, 0.05); /* Efeito vidro */
+    --primary-color: #2563eb;
+    --secondary-color: #22c55e;
+    --escuro: #1e293b;
+    --mais-escuro: #0f172a;
+    --claro: #f1f5f9;
+    --vidro: rgba(255, 255, 255, 0.05);
 }
 
 body {
@@ -120,7 +120,7 @@ body.menu-aberto {
     width: 100%;
 }
 
-.sair{
+.sair {
     text-decoration: none;
     color: var(--claro);
     font-size: 15px;
@@ -138,7 +138,7 @@ body.menu-aberto {
     transition: width 0.5s ease;
 }
 
-.sair:hover{
+.sair:hover {
     color: rgb(241, 78, 78);
     width: 100%;
 }
@@ -172,11 +172,8 @@ body.menu-aberto {
 
 .now:hover {
     transform: scale(1.1);
-
-    text-shadow:
-        0 5px 10px rgba(34, 197, 94, 0.7);
+    text-shadow: 0 5px 10px rgba(34, 197, 94, 0.7);
 }
-
 
 .entrada {
     padding: 6rem 2rem;
@@ -213,15 +210,15 @@ body.menu-aberto {
 }
 
 .input-text::placeholder {
-    color: #94a3b8; /* cinza claro */
+    color: #94a3b8;
 }
 
 .input-text:focus {
     border-color: var(--secondary-color);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3); /* brilho verde ao focar */
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
 }
 
-.btn{
+.btn {
     color: var(--claro);
     background-color: var(--secondary-color);
     font-size: medium;
@@ -234,12 +231,10 @@ body.menu-aberto {
     transition: all 0.5s ease;
 }
 
-.btn:hover{
+.btn:hover {
     transform: translateY(-4px);
     box-shadow: 0 5px 10px var(--escuro);
 }
-
-/*LOGIN*/
 
 .login-container {
     min-height: 100vh;
@@ -310,27 +305,25 @@ body.menu-aberto {
 }
 
 .modal-sucesso {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background-color: var(--secondary-color);
-  color: var(--claro);
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  font-weight: bold;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--secondary-color);
+    color: var(--claro);
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
 }
 
 .modal-sucesso.show {
-  opacity: 1;
-  pointer-events: auto;
+    opacity: 1;
+    pointer-events: auto;
 }
-
-/* ingressos */
 
 .passo {
     background-color: var(--escuro);
@@ -338,14 +331,14 @@ body.menu-aberto {
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    width: 300px; /* largura definida */
-    flex-shrink: 0; /* impede de encolher demais */
+    width: 300px;
+    flex-shrink: 0;
 }
 
 @media (max-width: 768px) {
-  .passo {
-    width: 100%;
-  }
+    .passo {
+        width: 100%;
+    }
 }
 
 .passo h2 {
@@ -365,7 +358,7 @@ body.menu-aberto {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem; /* espaço entre os blocos */
+    gap: 2rem;
 }
 
 .form-entrada {
@@ -422,41 +415,41 @@ body.menu-aberto {
 }
 
 .opcoes-ingresso {
-  display: flex;
-  gap: 1rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  justify-content: center;
-  flex-wrap: wrap;
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .opcoes-ingresso input[type="radio"] {
-  display: none;
+    display: none;
 }
 
 .opcao {
-  padding: 0.8rem 2rem;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
-  background-color: var(--escuro);
-  color: var(--claro);
-  user-select: none;
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    background-color: var(--escuro);
+    color: var(--claro);
+    user-select: none;
 }
 
 .opcao.vip {
-  border-color: #c084fc;
+    border-color: #c084fc;
 }
 
 .opcao.pista {
-  border-color: #60a5fa;
+    border-color: #60a5fa;
 }
 
 .opcoes-ingresso input[type="radio"]:checked + .opcao {
-  background-color: var(--secondary-color);
-  color: var(--mais-escuro);
-  border-color: var(--secondary-color);
-  box-shadow: 0 0 10px var(--secondary-color);
+    background-color: var(--secondary-color);
+    color: var(--mais-escuro);
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 10px var(--secondary-color);
 }
