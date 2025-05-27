@@ -1,282 +1,108 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const menuIcon = document.getElementById("menu-icon");
-  const menu = document.getElementById("menu");
-  const menuLinks = document.querySelectorAll(".menu-link");
-  const nav = document.querySelector(".navegacao");
-  const overlay = document.getElementById("overlay");
-
-  function toggleMenu() {
-    menu.classList.toggle("show");
-    overlay.classList.toggle("show");
-    document.body.classList.toggle("menu-aberto");
-
-    menuIcon.innerHTML = menu.classList.contains("show")
-      ? "&times;"
-      : "&#9776;";
-  }
-
-  menuIcon.addEventListener("click", toggleMenu);
-
-  menuLinks.forEach((link) => {
-    link.addEventListener("click", function (e) {
-      const href = this.getAttribute("href");
-
-      if (href.startsWith("#")) {
-        e.preventDefault(); // só previne se for âncora
-        const targetId = href.substring(1);
-        const targetElement = document.getElementById(targetId);
-
-        if (targetElement) {
-          const targetPosition =
-            targetElement.getBoundingClientRect().top + window.scrollY;
-          const navHeight = nav.offsetHeight;
-
-          window.scrollTo({
-            top: targetPosition - navHeight,
-            behavior: "smooth",
-          });
-
-          if (window.innerWidth <= 768) {
-            toggleMenu();
-          }
-        }
-      }
-      // senão, deixa seguir normalmente para .html
-    });
-  });
-
-  overlay.addEventListener("click", () => {
-    toggleMenu();
-  });
-});
-
-function toggleMenu() {
-  document.getElementById("menu").classList.toggle("show");
-  document.body.classList.toggle("menu-aberto");
-}
-
-// função para buscar e exibir participantes
-async function carregarParticipantes() {
-  try {
-    const resposta = await fetch("/api/participantes"); // endpoint do seu backend
-    const participantes = await resposta.json();
-
-    const lista = document.getElementById("lista-participantes");
-    lista.innerHTML = ""; // limpa a lista
-
-    if (participantes.length === 0) {
-      lista.innerHTML = "<p>Nenhum participante encontrado.</p>";
-      return;
-    }
-
-    participantes.forEach((p) => {
-      const div = document.createElement("div");
-      div.classList.add("passo");
-      div.innerHTML = `
-        <h2>${p.nome}</h2>
-        <p><strong>Email:</strong> ${p.email}</p>
-        <p><strong>Ingresso:</strong> ${p.tipoIngresso}</p>
-        <p><strong>Data do Check-in:</strong> ${new Date(
-          p.checkin
-        ).toLocaleString()}</p>
-      `;
-      lista.appendChild(div);
-    });
-  } catch (erro) {
-    console.error("Erro ao carregar participantes:", erro);
-    document.getElementById("lista-participantes").innerHTML =
-      '<p style="color:red;">Erro ao carregar participantes.</p>';
-  }
-}
-
-carregarParticipantes(); 
-
-const API_URL = "http://localhost:3000/api/participantes";
-
-function toggleMenu() {
-  const menu = document.getElementById("menu");
-  const overlay = document.getElementById("overlay");
-  menu.classList.toggle("show");
-  overlay.classList.toggle("show");
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const participantesEl = document.getElementById("lista-participantes");
-  if (participantesEl) {
-    carregarParticipantes();
-  }
-});
-
-function carregarParticipantes() {
+  const formCheckin = document.getElementById("form-checkin");
   const container = document.getElementById("lista-participantes");
-  if (!container) return;
-  container.innerHTML = "<p>Carregando...</p>";
 
-  fetch(API_URL)
-    .then((res) => res.json())
-    .then((data) => {
-      if (!data.length) {
+  const API_URL = "http://localhost:5012/checkins"; // ajuste aqui se a rota real for outra
+
+  // Função para carregar participantes
+  async function carregarParticipantes() {
+    if (!container) return;
+
+    container.innerHTML = "<p>Carregando...</p>";
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error("Erro ao buscar participantes");
+      const participantes = await response.json();
+
+      if (!participantes.length) {
         container.innerHTML = "<p>Nenhum participante encontrado.</p>";
         return;
       }
 
-      container.innerHTML = "";
-      data.forEach((p) => {
-        const div = document.createElement("div");
-        div.classList.add("passo");
-        div.innerHTML = `
-          <p><strong>Código:</strong> ${p.codigo}</p>
-          <p><strong>Data do Check-in:</strong> ${new Date(
-            p.data_hora
-          ).toLocaleString()}</p>
-        `;
-        container.appendChild(div);
-      });
-    })
-    .catch((err) => {
-      console.error(err);
-      container.innerHTML = "<p>Erro ao carregar participantes.</p>";
-    });
-}
+      container.innerHTML = participantes
+        .map(
+          (p, index) => `
+  <div class="passo" id="checkin-${index}">
+    <button class="fechar-checkin" data-id="checkin-${index}" style="float:right; background:none; border:none; font-size:16px; cursor:pointer;">❌</button>
+    <p><strong>Código:</strong> ${p.Codigo}</p>
+    <p><strong>Nome:</strong> ${p.NomePessoa}</p>
+    <p><strong>Email:</strong> ${p.Email}</p>
+    <p><strong>Tipo de Ingresso:</strong> ${p.TipoIngresso}</p>
+    <p><strong>Data do Check-in:</strong> ${new Date(
+      p.DataHora
+    ).toLocaleString()}</p>
+  </div>
+`
+        )
+        .join("");
 
-function exportarCSV() {
-  fetch(API_URL)
-    .then((res) => res.json())
-    .then((data) => {
-      let csv = "Nome,Email,Ingresso\n";
-      data.forEach((p) => {
-        csv += `"${p.nome}","${p.email}","${p.ingresso}"\n`;
-      });
+      ativarBotoesFechar(); // <-- Ativa os botões após renderizar os check-ins
+    } catch (error) {
+      console.error(error);
+      container.innerHTML =
+        "<p style='color:red;'>Erro ao carregar participantes.</p>";
+    }
+  }
 
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "participantes.csv";
-      link.click();
-    });
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("form-checkin");
-
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const codigo = document.getElementById("codigo").value.trim();
-
-      if (!codigo) return alert("Informe o código do ingresso");
-
-      try {
-        const response = await fetch("http://localhost:3000/api/checkin", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ codigo }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-          alert("Check-in realizado com sucesso!");
-          form.reset();
-        } else {
-          alert(`Erro: ${data.mensagem || "Código inválido"}`);
+  // Função para ativar botões de fechar ❌
+  function ativarBotoesFechar() {
+    const botoesFechar = document.querySelectorAll(".fechar-checkin");
+    botoesFechar.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.getAttribute("data-id");
+        const elemento = document.getElementById(id);
+        if (elemento) {
+          elemento.remove();
         }
-      } catch (err) {
-        console.error(err);
-        alert("Erro ao conectar com o servidor.");
-      }
+      });
     });
   }
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("form-checkin");
-
-  if (form) {
-    form.addEventListener("submit", async (e) => {
+  // Função de envio do formulário
+  if (formCheckin) {
+    formCheckin.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const codigo = document.getElementById("codigo").value.trim();
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const tipoIngresso = document.querySelector(
+        'input[name="ingresso"]:checked'
+      )?.value;
 
-      if (!codigo) {
-        alert("Informe o código do ingresso.");
+      if (!codigo || !nome || !email || !tipoIngresso) {
+        alert("Preencha todos os campos obrigatórios.");
         return;
       }
 
-      try {
-        const response = await fetch("http://localhost:3000/api/checkin", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ codigo }),
-        });
+      const dados = {
+        codigo,
+        nomePessoa: nome,
+        email,
+        tipoIngresso,
+      };
 
-        const result = await response.json();
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dados),
+        });
 
         if (response.ok) {
           alert("Check-in realizado com sucesso!");
-          form.reset();
+          formCheckin.reset();
+          carregarParticipantes();
         } else {
-          alert(result.mensagem || "Erro ao registrar código.");
+          const errorData = await response.json();
+          alert(errorData.mensagem || "Erro ao registrar o check-in.");
         }
       } catch (error) {
-        console.error(error);
-        alert("Erro ao conectar com o servidor.");
+        console.error("Erro:", error);
+        alert("Erro na conexão com o servidor.");
       }
     });
   }
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("form-entrada");
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const codigo = document.getElementById("codigo").value;
-
-      try {
-        const resposta = await fetch("http://localhost:3000/api/checkin", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ codigo }),
-        });
-
-        const resultado = await resposta.json();
-        if (resposta.ok) {
-          alert("Check-in realizado com sucesso!");
-          form.reset();
-        } else {
-          alert("Erro: " + resultado.erro);
-        }
-      } catch (erro) {
-        alert("Erro de conexão com o servidor");
-        console.error(erro);
-      }
-    });
-  }
-});
-
-document.addEventListener('DOMContentLoaded', async () => {
-  const container = document.querySelector('.lista-participantes');
-  try {
-    const resposta = await fetch('http://localhost:3000/api/participantes');
-    const participantes = await resposta.json();
-
-    if (participantes.length === 0) {
-      container.innerHTML = '<p>Nenhum participante registrado ainda.</p>';
-      return;
-    }
-
-    container.innerHTML = participantes.map(p =>
-      `<div class="card-participante">
-        <p><strong>Código:</strong> ${p.codigo}</p>
-        <p><strong>Data:</strong> ${new Date(p.data_hora).toLocaleString()}</p>
-      </div>`
-    ).join('');
-  } catch (err) {
-    container.innerHTML = '<p>Erro ao carregar participantes.</p>';
-  }
+  carregarParticipantes();
 });

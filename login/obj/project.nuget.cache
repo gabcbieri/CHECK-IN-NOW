@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "esU5OCicDbg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\barbi\\OneDrive\\Documentos\\Matérias - Universidade Positivo\\TERCEIRO SEMESTRE\\Tópicos Essenciais de Sistemas\\CHECK IN NOW\\checkin\\login\\login.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\barbi\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.3\\microsoft.aspnetcore.openapi.9.0.3.nupkg.sha512",
+    "C:\\Users\\barbi\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
