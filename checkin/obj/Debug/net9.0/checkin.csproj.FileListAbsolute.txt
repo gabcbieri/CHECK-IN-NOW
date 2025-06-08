@@ -64,3 +64,8 @@ C:\Users\barbi\OneDrive\Documentos\Matérias - Universidade Positivo\TERCEIRO SE
 C:\Users\barbi\OneDrive\Documentos\Matérias - Universidade Positivo\TERCEIRO SEMESTRE\Tópicos Essenciais de Sistemas\CHECK IN NOW\checkin\bin\Debug\net9.0\runtimes\linux-musl-arm64\native\libe_sqlite3.so
 C:\Users\barbi\OneDrive\Documentos\Matérias - Universidade Positivo\TERCEIRO SEMESTRE\Tópicos Essenciais de Sistemas\CHECK IN NOW\checkin\bin\Debug\net9.0\runtimes\maccatalyst-arm64\native\libe_sqlite3.dylib
 C:\Users\barbi\OneDrive\Documentos\Matérias - Universidade Positivo\TERCEIRO SEMESTRE\Tópicos Essenciais de Sistemas\CHECK IN NOW\checkin\bin\Debug\net9.0\runtimes\maccatalyst-x64\native\libe_sqlite3.dylib
+C:\Users\barbi\OneDrive\Documentos\Matérias - Universidade Positivo\TERCEIRO SEMESTRE\Tópicos Essenciais de Sistemas\CHECK IN NOW\checkin\bin\Debug\net9.0\Microsoft.OpenApi.dll
+C:\Users\barbi\OneDrive\Documentos\Matérias - Universidade Positivo\TERCEIRO SEMESTRE\Tópicos Essenciais de Sistemas\CHECK IN NOW\checkin\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\barbi\OneDrive\Documentos\Matérias - Universidade Positivo\TERCEIRO SEMESTRE\Tópicos Essenciais de Sistemas\CHECK IN NOW\checkin\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\barbi\OneDrive\Documentos\Matérias - Universidade Positivo\TERCEIRO SEMESTRE\Tópicos Essenciais de Sistemas\CHECK IN NOW\checkin\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\barbi\OneDrive\Documentos\Matérias - Universidade Positivo\TERCEIRO SEMESTRE\Tópicos Essenciais de Sistemas\CHECK IN NOW\checkin\obj\Debug\net9.0\checkin.MvcApplicationPartsAssemblyInfo.cs

@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!response.ok) throw new Error("Erro ao buscar participantes");
 
       const participantes = await response.json();
-      console.log("Participantes recebidos:", participantes); // ✅ MOVIDO PARA DENTRO
+      console.log("Participantes recebidos:", participantes);
 
       if (!participantes.length) {
         container.innerHTML = "<p>Nenhum participante encontrado.</p>";

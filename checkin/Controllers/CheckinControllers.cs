@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using CheckinApi.Data;
 using CheckinApi.Models;
 using System.Text.Json;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace CheckinApi.Controllers
 {
@@ -32,6 +35,7 @@ namespace CheckinApi.Controllers
             var checkins = await _context.Checkins
                 .Select(c => new
                 {
+                    id = c.Id,
                     codigo = c.Codigo,
                     nomePessoa = c.NomePessoa,
                     email = c.Email,
@@ -52,6 +56,7 @@ namespace CheckinApi.Controllers
 
             return Ok(new
             {
+                id = checkin.Id,
                 codigo = checkin.Codigo,
                 nomePessoa = checkin.NomePessoa,
                 email = checkin.Email,
@@ -88,6 +93,7 @@ namespace CheckinApi.Controllers
 
             return CreatedAtAction(nameof(GetCheckinById), new { id = checkin.Id }, new
             {
+                id = checkin.Id,
                 codigo = checkin.Codigo,
                 nomePessoa = checkin.NomePessoa,
                 email = checkin.Email,
@@ -137,6 +143,25 @@ namespace CheckinApi.Controllers
 
             await _context.SaveChangesAsync();
             return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCheckin(int id)
+        {
+            var checkin = await _context.Checkins.FindAsync(id);
+            if (checkin == null)
+                return NotFound(new { mensagem = "Check-in não encontrado." });
+
+            _context.Checkins.Remove(checkin);
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                id = checkin.Id,
+                codigo = checkin.Codigo,
+                nomePessoa = checkin.NomePessoa,
+                mensagem = "Check-in excluído com sucesso."
+            });
         }
     }
 }
