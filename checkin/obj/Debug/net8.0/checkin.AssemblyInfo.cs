@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("checkin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6cefcc0487066a557ff79f0f78263add7e947ca1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6e0c990d0d67f6ed82adb9607924ebce43326d50")]
 [assembly: System.Reflection.AssemblyProductAttribute("checkin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("checkin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
